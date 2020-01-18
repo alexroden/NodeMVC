@@ -1,9 +1,8 @@
 const url = require("url");
-const qs = require("querystring");
 
 // Routes
-const web = require("./web");
-const api = require("./api");
+const web = require("./http/routes/web");
+const api = require("./http/routes/api");
 
 const API_ROUTE = "api";
 
