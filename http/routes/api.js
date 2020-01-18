@@ -1,7 +1,7 @@
 const api = require("../controllers/api");
 
 exports.routes = {
-	'GET': {
-		'/': api.index
-	}
+    'GET': {
+        '/': api.index
+    }
 };
