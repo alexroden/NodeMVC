@@ -1,0 +1,24 @@
+{
+  "name": "node-mvc",
+  "version": "0.0.1",
+  "description": "Creating an mvc framework using node js",
+  "main": "router.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexroden/NodeMVC.git"
+  },
+  "author": "Alex Broom-Roden",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexroden/NodeMVC/issues"
+  },
+  "homepage": "https://github.com/alexroden/NodeMVC#readme",
+  "dependencies": {
+    "mongodb": "^3.5.1",
+    "node": "^13.6.0"
+  }
+}
