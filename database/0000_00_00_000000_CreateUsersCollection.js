@@ -7,9 +7,9 @@ const {
 MongoClient.connect(url, (error, db) => {
 	if (error) throw error;
 	let dbo = db.db(DB_NAME);
-	dbo.createCollection("user", (error, res) => {
+	dbo.createCollection("users", (error, res) => {
 		if (error) throw error;
-		console.log("User Collection Created!");
+		console.log("Users Collection Created!");
 		db.close();
 	});
 });
