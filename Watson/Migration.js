@@ -1,5 +1,5 @@
+const chalk = require("chalk");
 const fs = require("fs");
-
 
 const { Migration } = require("../helpers/Migration");
 const { Str } = require("../helpers/Str");
@@ -26,7 +26,10 @@ exports.Migration = {
             "});\n",
             (error) => {
                 if (error) throw error;
-                console.log("Collection Created!");
+                console.log(
+                    chalk
+                        .cyan("Collection Created!")
+                );
             }
         );
     }
