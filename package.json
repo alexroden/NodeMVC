@@ -18,6 +18,16 @@
   },
   "homepage": "https://github.com/alexroden/NodeMVC#readme",
   "dependencies": {
+    "chalk": "^3.0.0",
+    "clear": "^0.1.0",
+    "cli": "^1.0.1",
+    "clui": "^0.3.6",
+    "configstore": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "figlet": "^1.2.4",
+    "fs": "^0.0.1-security",
+    "inquirer": "^7.0.3",
+    "minimist": "^1.2.0",
     "mongodb": "^3.5.1",
     "node": "^13.6.0"
   }
