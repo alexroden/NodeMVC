@@ -6,34 +6,54 @@ const { Obj } = require("../helpers/Obj");
  | Database details.
  |-------------------------------------------------
  */
-const DB_HOST = Obj.get(process.env, "DB_HOST");
-const DB_INSTANCE = Obj.get(process.env, "DB_INSTANCE", "mongodb://localhost");
-const DB_NAME = Obj.get(process.env, "DB_NAME");
-const DB_PASSWORD = Obj.get(process.env, "DB_PASSWORD");
-const DB_PORT = Obj.get(process.env, "DB_PORT", "27017");
-const DB_USER = Obj.get(process.env, "DB_USERNAME");
+const DB_NAME = Obj.get(
+    process.env,
+    "DB_NAME"
+);
+const DB_URI = Obj.get(
+    process.env,
+    "DB_URI",
+    "mongodb://localhost:27017/DB_NAME"
+);
 
 /*
  |-------------------------------------------------
- | Database connection.
+ | Database options.
  |-------------------------------------------------
  */
-const MongoClient = require('mongodb').MongoClient;
+const options = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+};
 
 /*
  |-------------------------------------------------
  | Database url.
  |-------------------------------------------------
  */
-const url = `${DB_INSTANCE}:${DB_PORT}/${DB_NAME}`;
+const uri = DB_URI.replace("DB_NAME", DB_NAME);
+
+/*
+ |-------------------------------------------------
+ | Database connection.
+ |-------------------------------------------------
+ */
+const MongoClient = require("mongoose");
+MongoClient
+    .connect(uri, options);
+
+/*
+ |-------------------------------------------------
+ | Catch connection errors.
+ |-------------------------------------------------
+ */
+MongoClient
+    .connection
+    .on(
+        "error",
+        (error) => console.log(`MongoDB Error: ${error}`)
+    );
 
 module.exports = {
-    DB_HOST,
-    DB_INSTANCE,
-    DB_NAME,
-    DB_PASSWORD,
-    DB_PORT,
-    DB_USER,
-    MongoClient,
-    url
+    MongoClient
 };

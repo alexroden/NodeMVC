@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 exports.index = (req, res) => {
-    fs.readFile("./views/index.html", (error, data) => {
+    fs.readFile("../../../views/index.html", (error, data) => {
         res.writeHead(200, {'Content-type': 'text/html'});
         res.write(data);
         res.end();

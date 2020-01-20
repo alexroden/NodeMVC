@@ -1,6 +1,10 @@
+const async = require('async')
 const chalk = require("chalk");
+const exec = require("child_process").exec;
 const fs = require("fs");
+const process = require("process");
 
+const { Hudson } = require("../Hudson/Hudson");
 const { Migration } = require("../helpers/Migration");
 const { Str } = require("../helpers/Str");
 
@@ -9,20 +13,12 @@ const { CREATE } = require("./constants");
 exports.Migration = {
     create: (options) => {
         fs.appendFile(`./database/${Migration.dateTime(new Date())}_Create${Str.ucUpper(options[CREATE])}Collection.js`,
-            "const {\n" +
-            "\tDB_NAME,\n" +
-            "\tMongoClient,\n" +
-            "\turl\n" +
-            '} = require("../config/database");\n' +
+            'const { Hudson } = require("../Hudson/Hudson");\n' +
             "\n" +
-            "MongoClient.connect(url, (error, db) => {\n" +
-            "\tif (error) throw error;\n" +
-            "\tlet dbo = db.db(DB_NAME);\n" +
-            `\tdbo.createCollection("${options[CREATE]}", (error, res) => {\n` +
-            "\t\tif (error) throw error;\n" +
-            `\t\tconsole.log("${Str.ucUpper(options[CREATE])} Collection Created!");\n` +
-            "\t\tdb.close();\n" +
-            "\t});\n" +
+            `Hudson.make("${options[CREATE]}", {\n` +
+            "\tcreated_at: { type: Date, default: null },\n" +
+            "\tupdated_at: { type: Date, default: null },\n" +
+            "\tdeleted_at: { type: Date, default: null }\n" +
             "});\n",
             (error) => {
                 if (error) throw error;
@@ -32,5 +28,30 @@ exports.Migration = {
                 );
             }
         );
+    },
+    run: () => {
+        const folder = "./database/";
+        fs.readdir(folder, (error, files) => {
+            if (error) {
+                throw error;
+            }
+
+            files.forEach((file) => {
+                const migration  = require(`.${folder}${file}`);
+
+                Hudson.make(
+                    migration.name,
+                    migration.attributes
+                );
+            });
+
+        });
+
+        console.log(
+            chalk
+                .cyan("Migration ran!")
+        );
+
+        process.exit()
     }
 };

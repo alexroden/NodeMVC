@@ -1,8 +1,8 @@
 const url = require("url");
 
 // Routes
-const web = require("./http/routes/web");
-const api = require("./http/routes/api");
+const web = require("./app/http/routes/web");
+const api = require("./app/http/routes/api");
 
 const API_ROUTE = "api";
 

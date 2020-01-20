@@ -8,11 +8,10 @@ const options = cli.parse();
 const {
     actions,
     CREATE,
-    DATABASE,
     MIGRATION,
+    RUN,
     WATSON
 } = require("./constants");
-const { Database } = require("./Database");
 const { Migration } = require("./Migration");
 
 const KEYS = Object.keys(options);
@@ -24,13 +23,11 @@ exports.Watson = {
         ) {
             this.Watson.instructions()
         } else {
-            if (KEYS.indexOf(DATABASE) !== -1) {
-                if (KEYS.indexOf(CREATE) !== -1) {
-                    Database.create(options);
-                }
-            } else if (KEYS.indexOf(MIGRATION) !== -1) {
+            if (KEYS.indexOf(MIGRATION) !== -1) {
                 if (KEYS.indexOf(CREATE) !== -1) {
                     Migration.create(options);
+                } else if (KEYS.indexOf(RUN) !== -1) {
+                    Migration.run();
                 }
             }
         }

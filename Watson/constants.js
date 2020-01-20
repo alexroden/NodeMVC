@@ -1,18 +1,17 @@
 const CREATE = "create";
-const DATABASE = "database";
 const MIGRATION = "migration";
+const RUN = "run";
 const WATSON = "Watson";
 
 let actions = [];
-actions[`--${DATABASE}`] = {};
-actions[`--${DATABASE}`][`--${CREATE}={name}`] = "Creates a new MongoBD database";
 actions[`--${MIGRATION}`] = {};
 actions[`--${MIGRATION}`][`--${CREATE}={name}`] = "Creates a collection migration from a given name";
+actions[`--${MIGRATION}`][`--${RUN}`] = "Run the migration files";
 
 module.exports = {
     actions,
     CREATE,
-    DATABASE,
     MIGRATION,
+    RUN,
     WATSON
 };
