@@ -1,6 +1,4 @@
-const async = require('async')
 const chalk = require("chalk");
-const exec = require("child_process").exec;
 const fs = require("fs");
 const process = require("process");
 
@@ -30,28 +28,51 @@ exports.Migration = {
         );
     },
     run: () => {
+        let timeoutCount = 2000;
         const folder = "./database/";
         fs.readdir(folder, (error, files) => {
             if (error) {
                 throw error;
             }
 
+            timeoutCount = timeoutCount * files.length;
+            const migrations = Hudson.getMigrations();
             files.forEach((file) => {
-                const migration  = require(`.${folder}${file}`);
+                let migrated = false;
+                migrations.countDocuments({ name: file }, (err, count) => {
+                    migrated = count > 0;
+                });
 
-                Hudson.make(
-                    migration.name,
-                    migration.attributes
-                );
+                if (!migrated) {
+                    const migration = require(`.${folder}${file}`);
+
+                    Hudson.make(
+                        migration.name,
+                        migration.attributes
+                    );
+
+                    let newMigration = new migrations({
+                        name: file,
+                        created_at: new Date(),
+                        updated_at: new Date()
+                    });
+
+                    newMigration.save((e, result) => {
+                        if (e) {
+                            throw e;
+                        }
+                    });
+                }
             });
-
         });
 
-        console.log(
-            chalk
-                .cyan("Migration ran!")
-        );
+        setTimeout(() => {
+            console.log(
+                chalk
+                    .cyan("Migration ran!")
+            );
 
-        process.exit()
+            process.exit();
+        }, timeoutCount);
     }
 };

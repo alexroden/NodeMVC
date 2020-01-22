@@ -1,16 +1,36 @@
 const chalk = require("chalk");
 const fs = require("fs");
+const pluralize = require('pluralize');
+
 const { Str } = require("../helpers/Str");
 
 const { MongoClient } = require("../config/database");
 
 exports.Hudson = {
-    make: (name, properties) => {
+    createCollection: (name, properties) => {
         const schema = new MongoClient.Schema(properties);
 
-        MongoClient.model(Str.ucUpper(name), schema);
+        const model = MongoClient.model(Str.ucUpper(name), schema);
+        console.log(
+            chalk
+                .cyan(`Created ${Str.ucUpper(name)} Collection!`)
+        );
 
-        let atrributes = "const attributes = {\n";
+        return model;
+    },
+    getMigrations: () => {
+        const schema = new MongoClient.Schema({
+            name: String,
+            created_at: Date,
+            updated_at: Date,
+        });
+
+        return MongoClient.model("migrations", schema);
+    },
+    make: (name, properties) => {
+        this.Hudson.createCollection(name, properties);
+
+        let attributes = "exports.attributes = {\n";
         const propertyKeys = Object.keys(properties);
         propertyKeys.forEach((property, index) => {
             let type = properties[property];
@@ -19,22 +39,24 @@ exports.Hudson = {
             }
 
             let end = index + 1 < propertyKeys.length ?  "," : "";
-            atrributes = atrributes.concat(`\t${property}: ${type.name}${end}\n`);
+            attributes = attributes.concat(`\t${property}: ${type.name}${end}\n`);
         });
-        atrributes = atrributes.concat("};\n");
+        attributes = attributes.concat("};\n");
 
-        fs.appendFile(`./app/models/${Str.ucUpper(name)}.js`,
+        fs.appendFileSync(`./app/models/${Str.ucUpper(pluralize(name, 1))}.js`,
             'const { Model } = require("../../Hudson/Model");\n' +
             "\n" +
-            "/**\n" +
-            " * @type Object\n" +
-            " */\n" +
-            atrributes +
+            `exports.name = "${name}";\n` +
             "\n" +
             "/**\n" +
             " * @type Object\n" +
             " */\n" +
-            `exports.${Str.ucUpper(name)} = {\n` +
+            attributes +
+            "\n" +
+            "/**\n" +
+            " * @type Object\n" +
+            " */\n" +
+            `exports.${Str.ucUpper(pluralize(name, 1))} = {\n` +
             "\tcreate: Model.create,\n" +
             "\tdelete: Model.delete,\n" +
             "\tedit: Model.edit,\n" +
@@ -42,11 +64,8 @@ exports.Hudson = {
             "};\n" +
             "\n" +
             "module.export = {\n" +
-            `\t${Str.ucUpper(name)}\n` +
-            "};\n",
-            (error) => {
-                if (error) throw error;
-            }
+            `\t${Str.ucUpper(pluralize(name, 1))}\n` +
+            "};\n"
         );
     }
 };
