@@ -1,5 +1,5 @@
 {
-  "name": "node-mvc",
+  "name": "sherlock",
   "version": "0.0.1",
   "description": "Creating an mvc framework using node js",
   "main": "router.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexroden/NodeMVC.git"
+    "url": "git+https://github.com/alexroden/Sherlock.git"
   },
   "author": "Alex Broom-Roden",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alexroden/NodeMVC/issues"
+    "url": "https://github.com/alexroden/Sherlock/issues"
   },
-  "homepage": "https://github.com/alexroden/NodeMVC#readme",
+  "homepage": "https://github.com/alexroden/Sherlock#readme",
   "dependencies": {
     "async": "^3.1.0",
     "chalk": "^3.0.0",
