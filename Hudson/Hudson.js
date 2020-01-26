@@ -68,7 +68,7 @@ exports.Hudson = {
             `\t\t);\n` +
             `\t},\n` +
             "\tdelete: (findValues) => {\n" +
-            "\t\treturn Model.delete(\n" +
+            "\t\tModel.delete(\n" +
             `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
             `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
             `\t\t\tfindValues\n` +

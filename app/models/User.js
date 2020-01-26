@@ -29,7 +29,7 @@ exports.User = {
 		);
 	},
 	delete: (findValues) => {
-		return Model.delete(
+		Model.delete(
 			this.User.name,
 			this.User.attributes,
 			findValues
