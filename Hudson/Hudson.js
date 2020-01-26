@@ -46,6 +46,9 @@ exports.Hudson = {
         fs.appendFileSync(`./app/models/${Str.ucUpper(pluralize(name, 1))}.js`,
             'const { Model } = require("../../Hudson/Model");\n' +
             "\n" +
+            "/**\n" +
+            " * @type String\n" +
+            " */\n" +
             `exports.name = "${name}";\n` +
             "\n" +
             "/**\n" +
@@ -57,10 +60,35 @@ exports.Hudson = {
             " * @type Object\n" +
             " */\n" +
             `exports.${Str.ucUpper(pluralize(name, 1))} = {\n` +
-            "\tcreate: Model.create,\n" +
-            "\tdelete: Model.delete,\n" +
-            "\tedit: Model.edit,\n" +
-            "\tget: Model.get\n" +
+            "\tcreate: (values) => {\n" +
+            "\t\treturn Model.create(\n" +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
+            `\t\t\tvalues\n` +
+            `\t\t);\n` +
+            `\t},\n` +
+            "\tdelete: (findValues) => {\n" +
+            "\t\treturn Model.delete(\n" +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
+            `\t\t\tfindValues\n` +
+            `\t\t);\n` +
+            `\t},\n` +
+            "\tedit: (findValues, updateValues) => {\n" +
+            "\t\treturn Model.edit(\n" +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
+            `\t\t\tfindValues\n` +
+            `\t\t\tupdateValues\n` +
+            `\t\t);\n` +
+            `\t},\n` +
+            "\tget: (findValues) => {\n" +
+            "\t\treturn Model.get(\n" +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
+            `\t\t\tfindValues\n` +
+            `\t\t);\n` +
+            `\t}\n` +
             "};\n" +
             "\n" +
             "module.export = {\n" +

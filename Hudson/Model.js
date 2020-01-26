@@ -1,14 +1,58 @@
+const { MongoClient } = require("../config/database");
+
+const connect = (modelName, modelSchema) => {
+    const schema = new MongoClient.Schema(modelSchema);
+    return MongoClient.model(modelName, schema);
+};
+
 exports.Model = {
-    create: (values) => {
+    create: (modelName, modelSchema, values) => {
+        const model = connect(modelName, modelSchema);
 
+        let newDocument = new model(
+            Object.assign(values, {
+                created_at: new Date(),
+                updated_at: new Date()
+            })
+        );
+
+        newDocument.save((e, result) => {
+            if (e) {
+                throw e;
+            }
+
+            return result;
+        });
     },
-    delete: (user) => {
+    delete: (modelName, modelSchema, findValue) => {
+        const model = connect(modelName, modelSchema);
 
+        model.deleteOne(findValue, (e) => {
+            if (e) {
+                throw e;
+            }
+        });
     },
-    edit: (user, values) => {
+    edit: (modelName, modelSchema, findValues, values) => {
+        const model = connect(modelName, modelSchema);
 
+        model.updateOne(findValues, values, (e, result) => {
+            if (e) {
+                throw e;
+            }
+
+            return result;
+        });
     },
-    get: (user) => {
+    get: (modelName, modelSchema, findValues) => {
+        const model = connect(modelName, modelSchema);
 
+        model.findOne(findValues, (e, result) => {
+            if (e) {
+                throw e;
+            }
+
+            return result;
+        });
     }
 };
