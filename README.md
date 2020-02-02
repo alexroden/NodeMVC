@@ -1,5 +1,10 @@
 # Sherlock
 
+## Setup
+
+### Database
+Sherlock uses [MongoDB](https://www.mongodb.com/) as its database connection, implementing [Mongoose](https://mongoosejs.com/) to interact with with Mongo. This connection is done through two environment variables, found in the `.env.example` file: `DB_NAME` and `DB_URI`. You can generate the `DB_URI` from the free trier on the MongoDB website.
+
 ## Assets
 To compile assets `run build`.
 
