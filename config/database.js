@@ -10,6 +10,10 @@ const DB_NAME = Obj.get(
     process.env,
     "DB_NAME"
 );
+const DB_PASSWORD = Obj.get(
+    process.env,
+    "DB_PASSWORD"
+);
 const DB_URI = Obj.get(
     process.env,
     "DB_URI",
@@ -31,7 +35,7 @@ const options = {
  | Database url.
  |-------------------------------------------------
  */
-const uri = DB_URI.replace("DB_NAME", DB_NAME);
+const uri = DB_URI.replace("DB_NAME", DB_NAME).replace("DB_PASSWORD", DB_PASSWORD);
 
 /*
  |-------------------------------------------------
