@@ -2,6 +2,7 @@ const { MongoClient } = require("../config/database");
 
 const connect = (modelName, modelSchema) => {
     const schema = new MongoClient.Schema(modelSchema);
+
     return MongoClient.model(modelName, schema);
 };
 
@@ -9,14 +10,14 @@ exports.Model = {
     create: (modelName, modelSchema, values) => {
         const model = connect(modelName, modelSchema);
 
-        let newDocument = new model(
+        const newDocument = new model(
             Object.assign(values, {
                 created_at: new Date(),
                 updated_at: new Date()
             })
         );
 
-        newDocument.save((e, result) => {
+        return newDocument.save((e, result) => {
             if (e) {
                 throw e;
             }
@@ -36,7 +37,7 @@ exports.Model = {
     edit: (modelName, modelSchema, findValues, values) => {
         const model = connect(modelName, modelSchema);
 
-        model.updateOne(findValues, values, (e, result) => {
+        return model.updateOne(findValues, values, (e, result) => {
             if (e) {
                 throw e;
             }
@@ -47,7 +48,7 @@ exports.Model = {
     get: (modelName, modelSchema, findValues) => {
         const model = connect(modelName, modelSchema);
 
-        model.findOne(findValues, (e, result) => {
+        return model.findOne(findValues, (e, result) => {
             if (e) {
                 throw e;
             }

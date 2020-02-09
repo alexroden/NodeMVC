@@ -21,7 +21,8 @@ exports.Watson = {
         if (
             KEYS.length === 0
         ) {
-            this.Watson.instructions()
+            this.Watson.instructions();
+            process.exit();
         } else {
             if (KEYS.indexOf(MIGRATION) !== -1) {
                 if (KEYS.indexOf(CREATE) !== -1) {
