@@ -62,30 +62,30 @@ exports.Hudson = {
             `exports.${Str.ucUpper(pluralize(name, 1))} = {\n` +
             "\tcreate: (values) => {\n" +
             "\t\treturn Model.create(\n" +
-            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
-            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name,\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes,\n` +
             `\t\t\tvalues\n` +
             `\t\t);\n` +
             `\t},\n` +
             "\tdelete: (findValues) => {\n" +
             "\t\tModel.delete(\n" +
-            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
-            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name,\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes,\n` +
             `\t\t\tfindValues\n` +
             `\t\t);\n` +
             `\t},\n` +
             "\tedit: (findValues, updateValues) => {\n" +
             "\t\treturn Model.edit(\n" +
-            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
-            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
-            `\t\t\tfindValues\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name,\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes,\n` +
+            `\t\t\tfindValues,\n` +
             `\t\t\tupdateValues\n` +
             `\t\t);\n` +
             `\t},\n` +
             "\tget: (findValues) => {\n" +
             "\t\treturn Model.get(\n" +
-            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name\n` +
-            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.name,\n` +
+            `\t\t\tthis.${Str.ucUpper(pluralize(name, 1))}.attributes,\n` +
             `\t\t\tfindValues\n` +
             `\t\t);\n` +
             `\t}\n` +
