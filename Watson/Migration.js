@@ -1,5 +1,6 @@
 const chalk = require("chalk");
 const fs = require("fs");
+const pluralize = require('pluralize');
 const process = require("process");
 
 const { Hudson } = require("../Hudson/Hudson");
@@ -11,19 +12,27 @@ const { CREATE } = require("./constants");
 exports.Migration = {
     create: (options) => {
         fs.appendFile(`./database/${Migration.dateTime(new Date())}_Create${Str.ucUpper(options[CREATE])}Collection.js`,
-            'const { Hudson } = require("../Hudson/Hudson");\n' +
+            "/**\n" +
+            " * @type string\n" +
+            " */\n" +
+            `exports.name = "${pluralize(options[CREATE].toLowerCase(), 2)}";\n` +
             "\n" +
-            `Hudson.make("${options[CREATE]}", {\n` +
+            "/**\n" +
+            " * @type Object\n" +
+            " */\n" +
+            "exports.attributes = {\n" +
             "\tcreated_at: { type: Date, default: null },\n" +
             "\tupdated_at: { type: Date, default: null },\n" +
             "\tdeleted_at: { type: Date, default: null }\n" +
-            "});\n",
+            "};\n",
             (error) => {
                 if (error) throw error;
                 console.log(
                     chalk
                         .cyan("Collection Created!")
                 );
+
+                process.exit();
             }
         );
     },
